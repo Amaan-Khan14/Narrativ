@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-// import { userRouter } from '../routes/user';
+import { userRouter } from '../routes/user';
 
 const app = new Hono<{
   Bindings: {
@@ -12,6 +12,6 @@ app.get('/', (c) => {
   return c.text('Amaan! This side')
 })
 
-// app.route('/user', userRouter)
+app.route('/user', userRouter)
 
 export default app
