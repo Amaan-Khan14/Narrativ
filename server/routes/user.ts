@@ -8,7 +8,7 @@ export const userRouter = new Hono<{
         DATABASE_URL: string;
         JWT_SECRET: string;
     }
-}>()
+}>();
 
 userRouter.post('/signup', async (c) => {
     const prisma = new PrismaClient({
@@ -21,7 +21,7 @@ userRouter.post('/signup', async (c) => {
         return c.json({ error: 'No body' }, 400)
     }
     try {
-
+        
         const user = await prisma.user.create({
             data: {
                 email: body.email,
@@ -51,24 +51,26 @@ userRouter.post('/signin', async (c) => {
         return c.json({ error: 'No body' }, 400)
     }
 
-    const user = await prisma.user.findFirst({
-        where: {
-            email: body.email
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                email: body.email
+            }
+        })
+        if (!user) {
+            return c.json({ message: 'User not found' }, 401)
         }
-    })
+        if (user.password !== body.password) {
+            return c.json({ message: 'Invalid password' }, 401)
+        }
+        const token = await sign({
+            id: user.id,
+            email: user.email
+        }, c.env.JWT_SECRET)
 
-    if (!user) {
-        return c.json({ message: 'User not found' }, 400)
+        return c.json({ message: 'Logged in Successfully', token: token })
+
+    } catch (error) {
+        return c.json({ message: "Some Error Occured", error: error }, 400)
     }
-
-    if (user.password !== body.password) {
-        return c.json({ message: 'Invalid password' }, 400)
-    }
-
-    const token = await sign({
-        id: user.id,
-        email: user.email
-    }, c.env.JWT_SECRET)
-
-    return c.json({ message: 'Logged in', token: token })
 })
