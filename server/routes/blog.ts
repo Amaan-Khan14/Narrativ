@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { jwt, verify } from "hono/jwt";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
+import { createBlogSchema } from "@amaank14/narrativ-common";
 
 export const blogrouter = new Hono<{
     Bindings: {
@@ -37,6 +38,10 @@ blogrouter.post("/", async (c) => {
     }).$extends(withAccelerate())
 
     const body = await c.req.json()
+
+    const { success, error } = createBlogSchema.safeParse(body)
+    if (!success) return c.json({ message: "Invalid body", error: error.issues }, 400)
+
     const authorId = c.get("authorId")
     try {
         const blog = await prisma.blog.create({
@@ -87,6 +92,10 @@ blogrouter.put("/:id{[0-9]+}", async (c) => {
 
     const id = c.req.param("id")
     const body = await c.req.json()
+
+    const { success, error } = createBlogSchema.safeParse(body)
+    if (!success) return c.json({ message: "Invalid body", error: error.issues }, 400)
+
     const authorId = c.get("authorId")
 
     if (!authorId) {
