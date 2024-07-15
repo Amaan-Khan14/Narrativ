@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, jwt, sign, verify } from 'hono/jwt'
+import { SignUpSchema, SignInSchema } from "@amaank14/narrativ-common";
 
 export const userRouter = new Hono<{
     Bindings: {
@@ -21,7 +22,7 @@ userRouter.post('/signup', async (c) => {
         return c.json({ error: 'No body' }, 400)
     }
     try {
-        
+
         const user = await prisma.user.create({
             data: {
                 email: body.email,
