@@ -2,8 +2,8 @@ name = "narrativ"
 compatibility_date = "2024-07-14"
 
 [vars]
-DATABASE_URL="urDbUrl"
-JWT_SECRET=<secret>
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMmY0ZjY0YWItYzYxYy00MDZjLTg1ZjAtN2E1OTBiYTBlNWVlIiwidGVuYW50X2lkIjoiYWU2MTdmZTEyNTM4MGNjZDI4ZGYwNTkzZjM2OWZjYmYyZTU2ZjcxOGM1ZTY0NzVkNjBmZjc5YjFhODA2Nzc3OSIsImludGVybmFsX3NlY3JldCI6IjBlYjU5Yzc2LWM0NTAtNGNhOS05OTVlLWMyMmE3YjRkMzUwZSJ9.O200pfGlbc9WrbTu0nRcwx2mWYfRAcvrOz4nOpLtdsk"
+JWT_SECRET="narrativ"
 # MY_VAR = "my-variable"
 
 # [[kv_namespaces]]

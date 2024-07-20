@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { userRouter } from '../routes/user';
 import { blogrouter } from '../routes/blog';
+import { cors } from 'hono/cors';
 
 const app = new Hono<{
   Bindings: {
@@ -9,9 +10,11 @@ const app = new Hono<{
   }
 }>()
 
-app.get('/', (c) => {
-  return c.text('Amaan! This side')
-})
+app.use('/*', cors()),
+
+  app.get('/', (c) => {
+    return c.text('Amaan! This side')
+  })
 
 app.route('/user', userRouter)
 app.route('/blog', blogrouter)
