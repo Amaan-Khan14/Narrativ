@@ -1,24 +1,27 @@
 import { AppBar } from "@/components/ui/Appbar"
 import { BlogCard } from "@/components/ui/blogcard"
+import { useBlogs } from "@/hooks"
+
 
 export const Blogs = () => {
+    const { blogs, isLoading } = useBlogs();
+
+    if (isLoading) {
+        return <div>Loading...</div>;  // Or any loading indicator
+    }
     return (
         <div>
-            <AppBar authorName="amaan khan" />
+            <AppBar />
             <div className="flex justify-center">
-                <div className="w-1/2 mt-24">
-                    <BlogCard
-                        authorName="John Doe"
-                        title="The Future of Web Development"
-                        content="In this article, we explore emerging trends in web development, including the rise of JAMstack, the growing importance of performance optimization, and the impact of AI on frontend design."
-                        publishedDate="2024-07-15"
-                    />
-                    <BlogCard
-                        authorName="John Doe"
-                        title="The Future of Web Development"
-                        content="In this article, we explore emerging trends in web development, including the rise of JAMstack, the growing importance of performance optimization, and the impact of AI on frontend design."
-                        publishedDate="2024-07-1"
-                    />
+                <div className="w-1/2 mt-8">
+                    {blogs.map((blog) => (
+                        <BlogCard
+                            authorName={blog.author.username}
+                            title={blog.title}
+                            content={blog.content}
+                            publishedDate={blog.publishedDate}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

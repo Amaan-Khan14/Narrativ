@@ -1,5 +1,5 @@
-import { Card, CardDescription, CardHeader, CardTitle } from "./card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardDescription, CardTitle } from "./card"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 interface BlogCardProps {
     authorName: string;
@@ -12,11 +12,11 @@ export const BlogCard = ({ authorName, title, content, publishedDate }: BlogCard
     return (
         <div>
             <Card className="sm:visible invisible rounded-2xl bg-inherit md:visible mb-5 shadow-2xl [box-shadow:0_-20px_80px_-20px_rgba(0,0,0,0.15)_inset] border-2 border-white/5 font-geistSans hover:bg-transparent/10 hover:border-zinc-600">
-                <div className="mx-5 my-10">
+                <div className="m-5">
                     <div className="flex font-thin mb-3 text-stone-400">
                         <Avatar className="bg-stone-800 h-6 mr-2 w-6 font-semibold">
                             <AvatarFallback className="text-transparent bg-clip-text text-xs">
-                                {authorName[0]}{authorName.split(" ")[1][0]}
+                                {authorName[0]}
                             </AvatarFallback>
                         </Avatar>
                         {authorName} {publishedDate}

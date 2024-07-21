@@ -1,10 +1,7 @@
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar"
 
-interface AppBarProps {
-    authorName: string;
-}
 
-export const AppBar = ({ authorName }: AppBarProps) => {
+export const AppBar = () => {
     return (
         <nav className="bg-zinc-800 shadow-lg p-4">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
