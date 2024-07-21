@@ -143,24 +143,22 @@ blogrouter.get("/all", async (c) => {
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
 
-    const page = parseInt(c.req.query('page') as string) || 1
-    const pageSize = 10
-
     try {
         const blogs = await prisma.blog.findMany({
-            skip: (page - 1) * pageSize,
-            take: pageSize,
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        username: true
+                    }
+
+                }
+            }
         })
 
-        const totalBlogs = await prisma.blog.count()
-        const totalPages = Math.ceil(totalBlogs / pageSize)
-
-        return c.json({
-            blogs: blogs,
-            currentPage: page,
-            totalPages: totalPages,
-            totalBlogs: totalBlogs
-        })
+        return c.json({ blogs: blogs, })
     } catch (error) {
         return c.json({ message: "Error fetching blogs" }, 400)
     }

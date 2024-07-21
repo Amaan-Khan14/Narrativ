@@ -39,7 +39,7 @@ userRouter.post('/signup', async (c) => {
         })
         return c.json({ message: 'User created', user: user })
     } catch (error) {
-        return c.json({ message: "User already exists" }, 400)
+        return c.json({ message: "Username or Email already exists" }, 400)
     }
 })
 
