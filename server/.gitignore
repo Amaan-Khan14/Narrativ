@@ -33,7 +33,7 @@ yarn-error.log*
 *.sw?
 
 # Cloudflare Workers
-wrangler.*
-
+wrangler.toml
+.wrangler/
 # Bun
 bun.lockb
