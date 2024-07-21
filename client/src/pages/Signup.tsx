@@ -11,8 +11,10 @@ import { Label } from "@/components/ui/label";
 import { SignUpSchema } from "@amaank14/narrativ-common";
 import axios from "axios";
 import { useState } from "react";
-import { API_URL } from "../config";
+import { APP_URL } from "../config";
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from "@/components/ui/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 
 export const Signup = () => {
@@ -22,13 +24,35 @@ export const Signup = () => {
         email: '',
         password: ''
     })
+    const [isLoading, setIsLoading] = useState(false);
+
 
     async function handleSubmit() {
+        setIsLoading(true);
+
         try {
-            const res = await axios.post(`${API_URL}/user/signup`, inputs)
+            await axios.post(`${APP_URL}/user/signup`, inputs)
+            toast({
+                title: "Account Created Successfully",
+                description: "Welcome aboard! Your account has been set up and you're ready to go.",
+                duration: 5000,
+            })
             navigate('/login')
         } catch (error) {
-            console.log(error)
+            let errorMessage = "An error occurred during sign in. Please try again.";
+
+            if (axios.isAxiosError(error)) {
+                errorMessage = error.response?.data?.message || errorMessage;
+            }
+
+            toast({
+                title: "Sign Up Failed",
+                description: errorMessage,
+                variant: "destructive",
+                duration: 5000,
+            })
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -66,11 +90,17 @@ export const Signup = () => {
                     </div>
                 </CardContent>
                 <CardFooter className="flex flex-col items-center justify-center">
-                    <Button onClick={(e) => {
-                        e.preventDefault();
-                        handleSubmit();
-                    }} type="submit" className="text-lg px-10 relative hover:text-zinc-100 bg-page-gradient border-stone-800/30 text-md font-geistSans hover:border-zinc-600 hover:bg-transparent/20 hover:shadow-inner hover:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] text-zinc-700" variant="outline">
-                        Sign Up
+                    <Button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleSubmit();
+                        }}
+                        type="button"
+                        className="text-lg px-10 relative hover:text-zinc-100 bg-page-gradient border-stone-800/30 text-md font-geistSans hover:border-zinc-600 hover:bg-transparent/20 hover:shadow-inner hover:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] text-zinc-700 flex items-center justify-center"
+                        variant="outline"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? <ReloadIcon className="animate-spin mr-2" /> : 'Sign Up'}
                     </Button>
                     <p className="mt-2 bg-gradient-to-tr from-zinc-50 to-gray-200 bg-clip-text text-transparent"> Already a member? <Link to='/login'>Signin</Link></p>
                 </CardFooter>
@@ -78,5 +108,5 @@ export const Signup = () => {
         </div>
 
     );
-}   
+}
 
