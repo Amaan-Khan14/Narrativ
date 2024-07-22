@@ -4,14 +4,42 @@ import { useEffect, useState } from "react";
 
 
 
-interface Blog {
-    id: string;
+export interface Blog {
+    createdAt: Date;
+    id: number;
     author: {
         username: string;
     };
     title: string;
     content: string;
-    publishedDate: string;
+}
+
+export const useBlog = ({ id }: { id: number }) => {
+    const [blog, setBlog] = useState<Blog>();
+    const [isLoading, setIsLoading] = useState(true);  
+
+    useEffect(() => {
+        setIsLoading(true);  
+        axios.get(`${APP_URL}/blog/${id}`, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        })
+            .then(res => {
+                setBlog(res.data.blog);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setIsLoading(false);
+            });
+    }, []);
+
+    return {
+        blog,
+        isLoading
+    };
+
 }
 
 export const useBlogs = () => {
