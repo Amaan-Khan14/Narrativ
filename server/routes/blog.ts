@@ -71,16 +71,28 @@ blogrouter.get("/:id{[0-9]+}", async (c) => {
     const id = c.req.param("id")
 
     try {
-        const blogs = await prisma.blog.findMany({
+        const blog = await prisma.blog.findFirst({
             where: {
                 id: Number(id)
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                createdAt: true,
+                author: {
+                    select: {
+                        username: true
+                    }
+                }
             }
         })
-        if (blogs.length === 0) {
+
+        if (!blog) {
             return c.json({ message: "Blog not found" }, 404)
         }
 
-        return c.json({ blogs: blogs })
+        return c.json({ blog })
     } catch (error) {
         return c.json({ message: "Error fetching blogs" }, 400)
     }
@@ -149,6 +161,7 @@ blogrouter.get("/all", async (c) => {
                 id: true,
                 title: true,
                 content: true,
+                createdAt: true,
                 author: {
                     select: {
                         username: true

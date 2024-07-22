@@ -22,11 +22,12 @@ model User {
 }
 
 model Blog {
-  id        Int     @id @unique @default(autoincrement())
+  id        Int      @id @unique @default(autoincrement())
   title     String
   content   String
   thumbnail String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
+  createdAt DateTime @default(now())
 }
