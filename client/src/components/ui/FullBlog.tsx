@@ -1,8 +1,8 @@
 import { Blog } from "@/hooks";
-import { parseISO } from "date-fns";
-import { format } from "date-fns/format";
+import { parseISO, format } from "date-fns";
 import { Avatar, AvatarFallback } from "./avatar";
 import { Card } from "./card";
+import DOMPurify from 'dompurify';
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
     const formatDate = (date: Date | string | null | undefined) => {
@@ -14,6 +14,10 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
             console.error('Error formatting date:', error);
             return 'Invalid date';
         }
+    };
+
+    const sanitizeHtml = (html: string) => {
+        return DOMPurify.sanitize(html);
     };
 
     return (
@@ -29,7 +33,10 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         </Avatar>
                         <span className="sm:text-2xl text-xs break-words font-semibold text-stone-400">{blog.author.username}</span>
                     </div>
-                    <div className="sm:text-lg text-sm text-stone-50 font-thin break-words">{blog.content}</div>
+                    <div
+                        className="sm:text-lg text-sm text-stone-50 font-thin break-words prose prose-invert max-w-none"
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(blog.content) }}
+                    />
                 </div>
             </div>
             <div className="col-span-full 2xl:col-span-2 md:mx-10 mt-8 2xl:block hidden">

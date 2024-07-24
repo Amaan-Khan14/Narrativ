@@ -26,7 +26,7 @@ export const BlogCard = ({ id, authorName, title, content, createdAt }: BlogCard
     return (
         <div>
             <Link to={`/blog/${id}`}>
-                <Card className="cursor-pointer rounded-2xl bg-inherit md:visible mb-5 shadow-2xl [box-shadow:0_-20px_80px_-20px_rgba(0,0,0,0.15)_inset] border-2 border-white/5 font-geistSans hover:bg-transparent/10 hover:border-zinc-600">
+                <Card className="cursor-pointer rounded-2xl bg-inherit mb-5 shadow-2xl [box-shadow:0_-20px_80px_-20px_rgba(0,0,0,0.15)_inset] border-2 border-white/5 font-geistSans hover:bg-transparent/10 hover:border-zinc-600">
                     <div className="m-5">
                         <div className="flex font-thin mb-3 text-stone-400">
                             <Avatar className="bg-stone-800 h-6 mr-2 w-6 font-semibold">

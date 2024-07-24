@@ -14,7 +14,7 @@ export const AppBar = ({ }) => {
                         <div className="flex items-baseline space-x-4">
                             <a href="/blogs" className="text-stone-300 hover:bg-zinc-700/50 hover:text-white hover:font-semibold px-3 py-2 rounded-md text-lg font-normal tracking-wide transition duration-300">Home</a>
                             <a href="/about" className="text-stone-300 hover:bg-zinc-700/50 hover:text-white hover:font-semibold px-3 py-2 rounded-md text-lg font-normal tracking-wide transition duration-300">About</a>
-                            <a href="/create" className="text-stone-300 hover:bg-zinc-700/50 hover:text-white hover:font-semibold px-3 py-2 rounded-md text-lg font-normal tracking-wide transition duration-300">Create</a>
+                            <a href="/publish" className="text-stone-300 hover:bg-zinc-700/50 hover:text-white hover:font-semibold px-3 py-2 rounded-md text-lg font-normal tracking-wide transition duration-300">Publish</a>
                         </div>
                     </div>
                 </div>
