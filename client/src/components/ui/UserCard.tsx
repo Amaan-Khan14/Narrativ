@@ -13,7 +13,7 @@ export const UserCard = ({ username, email, }: UserCardProps) => {
             <Card className=" sm:block hidden rounded-2xl bg-inherit mb-5 shadow-2xl [box-shadow:0_-20px_80px_-20px_rgba(0,0,0,0.15)_inset] border-2 border-white/5 font-geistSans hover:bg-transparent/10 hover:border-zinc-600">
                 <CardHeader className="flex flex-col sm:flex-row items-center m-3 sm:m-5 font-thin text-stone-400">
                     <Avatar className="bg-stone-800 h-10 w-10 mb-2 sm:mb-0 sm:mr-2 font-semibold">
-                        <AvatarFallback className="text-transparent  bg-clip-text text-xl">
+                        <AvatarFallback className="text-transparent bg-clip-text text-xl">
                             {username[0]}
                         </AvatarFallback>
                     </Avatar>
@@ -36,7 +36,8 @@ export const UserCard = ({ username, email, }: UserCardProps) => {
                             {username[0]}
                         </AvatarFallback>
                     </Avatar>
-                    <span className="text-xs break-words font-semibold text-stone-400">{username}</span>
+                    <span className="text-2xl break-words font-semibold text-stone-400">{username}</span>
+                    <span className="text-xs font-semibold text-stone-400">{email}</span>
                 </div>
             </Card>
             <div className='flex justify-center text-2xl font-semibold m-5 text-stone-400'>

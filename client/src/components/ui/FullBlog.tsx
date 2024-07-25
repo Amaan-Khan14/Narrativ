@@ -14,7 +14,6 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState(false);
 
     const formatDate = (date: Date | string | null | undefined) => {
         if (!date) return 'No date';
@@ -32,56 +31,23 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
     };
 
     return (
-        <div className="sm:mx-16 grid grid-cols-1 2xl:grid-cols-10 2xl:gap-4">
+        <div className="mx-16 grid grid-cols-1 2xl:grid-cols-10 2xl:gap-4">
             <div className="col-span-full 2xl:col-span-8 md:mx-10 m-2">
                 <div className="w-full mt-8">
-                    <div className="flex items-center justify-between mb-5">
-                        <div className="md:text-4xl text-base font-bold text-stone-300 break-words pr-4">{blog.title}</div>
-                        <Button
-                            className="w-full sm:w-auto sm:block hidden text-lg sm:text-xl relative text-zinc-100 bg-stone-800 border-stone-800/30 text-md font-geistSans hover:border-zinc-600 hover:bg-transparent/20 hover:shadow-inner hover:text-zinc-950  items-center justify-center"
-                            onClick={async () => {
-                                setIsLoading(true);
-                                try {
-                                    await axios.delete(`${APP_URL}/blog/${blog.id}`, {
-                                        headers: {
-                                            Authorization: localStorage.getItem("token")
-                                        }
-                                    });
-                                    toast({
-                                        title: "Success",
-                                        description: "Blog deleted successfully",
-                                        variant: "destructive",
-                                        duration: 5000
-                                    })
-                                    navigate("/blogs");
-                                } catch (error) {
-                                    toast({
-                                        title: "Error",
-                                        description: "You are not authorized to delete this blog",
-                                        variant: "destructive",
-                                        duration: 5000
-                                    })
-                                } finally {
-                                    setIsLoading(false);
-                                }
-                            }}
-                            disabled={isLoading}
-                        >
-                            {isLoading ? <ReloadIcon className="animate-spin" /> : <TrashIcon
-                                className="h-6 w-6 text-stone-400 cursor-pointer flex-shrink-0"
-                            />}
-                        </Button>
+                    <div className="mb-5">
+                        <div className="text-4xl font-bold text-stone-300 break-words pr-4">{blog.title}</div>
                     </div>
-                    <div className="flex items-center mb-2 2xl:hidden">
-                        <Avatar className="bg-stone-800 h-8 mr-2 w-8 font-semibold sm:block hidden ">
+                    <div className="flex mb-2 2xl:hidden">
+                        <Avatar className="bg-stone-800 h-8 mr-2 w-8 font-semibold ">
                             <AvatarFallback className="text-transparent bg-clip-text text-xl">
                                 {blog.author.username[0]}
                             </AvatarFallback>
                         </Avatar>
-                        <span className="text-2xl sm:block hidden break-words font-semibold text-stone-400">{blog.author.username}</span>
+                        <span className="text-2xl break-words font-semibold text-stone-400">{blog.author.username}</span>
                     </div>
+                    <div className="my-2 font-thin text-stone-300 tracking-wide 2xl:hidden block">Published on: <i>{formatDate(blog.createdAt)}</i></div>
                     <div
-                        className="sm:text-lg text-sm text-stone-50 font-thin break-words prose prose-invert max-w-none"
+                        className="text-lg text-stone-50 break-words prose prose-invert max-w-none"
                         dangerouslySetInnerHTML={{ __html: sanitizeHtml(blog.content) }}
                     />
                 </div>
