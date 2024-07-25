@@ -22,14 +22,13 @@ blogrouter.use("/*", async (c, next) => {
     try {
         const user = await verify(token, c.env.JWT_SECRET)
         if (!user) {
-            return c.json({ message: "Invalid token" }, 401)
+            return c.json({ message: "Invalid token else" }, 401)
         }
         c.set("authorId", user.id as string)
         await next()
     } catch (error) {
-        return c.json({ message: "Invalid token" }, 401)
+        return c.json({ message: "Invalid token catch" }, 401)
     }
-
 })
 
 blogrouter.post("/", async (c) => {
@@ -162,6 +161,7 @@ blogrouter.get("/all", async (c) => {
                 id: true,
                 title: true,
                 description: true,
+                content: true,
                 createdAt: true,
                 author: {
                     select: {
@@ -186,23 +186,60 @@ blogrouter.delete("/:id{[0-9]+}", async (c) => {
     const id = c.req.param("id")
     const authorId = c.get("authorId")
     try {
-
         const blog = await prisma.blog.findFirst({
             where: {
                 id: Number(id),
                 authorId: Number(authorId)
             }
         })
-        if (!blog) return c.json({ message: "Blog not found" }, 404)
-        const deleteBlog = await prisma.blog.delete({
+        if (!blog) return c.json({ message: "You are not Authorized to delete this Blog" }, 404)
+
+        await prisma.blog.delete({
             where: {
                 id: Number(id),
-                authorId: Number(c.get("authorId"))
             }
         })
 
         return c.json({ message: "Blog deleted", blog: blog })
     } catch (error) {
         return c.json({ message: "Error deleting blog" }, 400)
+    }
+})
+
+
+blogrouter.get("/user/all", async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+    const authorId = c.get("authorId")
+
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                id: Number(authorId)
+            },
+            select: {
+                username: true,
+                email: true
+            }
+        })
+
+        const allBlogs = await prisma.blog.findMany({
+            where: {
+                authorId: Number(authorId)
+            },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                createdAt: true,
+            }
+        })
+        return c.json({ allBlogs: allBlogs, user: user }, 200)
+    } catch (error) {
+        return c.json({
+            message: "Error fetching blogs"
+        }, 400)
     }
 })

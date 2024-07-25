@@ -5,6 +5,7 @@ import { Toaster } from './components/ui/toaster';
 import { Blogs } from './pages/Blogs';
 import { Blog } from './pages/Blog';
 import { Publish } from './pages/Publish';
+import { Profile } from './pages/Profile';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:id" element={<Blog />} />
           <Route path="/publish" element={<Publish />} />
-
+          <Route path='/profile' element={<Profile />} />
         </Routes>
         <Toaster />
       </div>

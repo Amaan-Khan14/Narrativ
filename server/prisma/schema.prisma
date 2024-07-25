@@ -25,8 +25,6 @@ model Blog {
   id          Int      @id @unique @default(autoincrement())
   title       String
   content     String
-  thumbnail   String?
-  published   Boolean  @default(false)
   description String
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    Int
