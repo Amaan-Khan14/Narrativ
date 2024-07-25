@@ -14,6 +14,7 @@ export const signInSchema = z.object({
 
 export const createBlogSchema = z.object({
     title: z.string().min(3),
+    description: z.string().optional(),
     content: z.string().min(10),
 })
 
