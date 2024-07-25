@@ -48,6 +48,7 @@ blogrouter.post("/", async (c) => {
             data: {
                 title: body.title,
                 content: body.content,
+                description: body.description,
                 authorId: Number(authorId)
             },
             select: {
@@ -160,7 +161,7 @@ blogrouter.get("/all", async (c) => {
             select: {
                 id: true,
                 title: true,
-                content: true,
+                description: true,
                 createdAt: true,
                 author: {
                     select: {
