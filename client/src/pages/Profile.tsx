@@ -15,7 +15,7 @@ export const Profile = () => {
                 <AppBar />
                 <div className=" flex justify-center ">
                     <div className="w-1/2 mt-8 sm:block hidden">
-                        <Card className="bg-inherit mb-5">
+                        <Card className="bg-inherit border-2 border-white/5 mb-5">
                             <div className="flex items-center space-x-4 m-10">
                                 <Skeleton className="h-12 w-12 rounded-full" />
                                 <div className="space-y-2">
@@ -24,20 +24,20 @@ export const Profile = () => {
                                 </div>
                             </div>
                         </Card>
-                        <Card className="bg-inherit mb-2">
+                        <Card className="bg-inherit border-2 border-white/5 mb-2">
                             <div className="space-y-2 m-10">
                                 <Skeleton className="h-4 w-[250px]" />
                                 <Skeleton className="h-4 w-[200px]" />
                             </div>
                         </Card>
-                        <Card className="bg-inherit">
+                        <Card className="bg-inherit border-2 border-white/5">
                             <div className="space-y-2 m-10">
                                 <Skeleton className="h-4 w-[250px]" />
                                 <Skeleton className="h-4 w-[200px]" />
                             </div>
                         </Card>
                     </div>
-                    <ReloadIcon className="animate-spin sm:hidden block mt-96 h-24 w-24 text-stone-400"/>
+                    <ReloadIcon className="animate-spin sm:hidden block mt-96 h-24 w-24 text-stone-400" />
                 </div>
             </div>
         )
@@ -55,7 +55,6 @@ export const Profile = () => {
                             title={blog.title}
                             createdAt={blog.createdAt}
                             description={blog.description}
-
                         />
                     ))}
                 </div>
