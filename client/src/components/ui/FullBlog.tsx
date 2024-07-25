@@ -21,7 +21,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
     };
 
     return (
-        <div className="sm:mx-16 sm:mb-16 grid grid-cols-1 2xl:grid-cols-10 2xl:gap-4">
+        <div className="sm:mx-16 grid grid-cols-1 2xl:grid-cols-10 2xl:gap-4">
             <div className="col-span-full 2xl:col-span-8 md:mx-10 m-2">
                 <div className="w-full mt-8">
                     <h1 className="md:text-4xl text-2xl font-bold text-stone-300 mb-5 break-words">{blog.title}</h1>

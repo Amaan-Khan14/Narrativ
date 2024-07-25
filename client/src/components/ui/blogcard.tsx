@@ -9,9 +9,10 @@ interface BlogCardProps {
     content: string;
     createdAt: Date;
     id: number;
+    description?: string;
 }
 
-export const BlogCard = ({ id, authorName, title, content, createdAt }: BlogCardProps) => {
+export const BlogCard = ({ id, authorName, title, description, createdAt }: BlogCardProps) => {
     const formatDate = (date: Date | string | null | undefined) => {
         if (!date) return 'No date';
         try {
@@ -41,11 +42,12 @@ export const BlogCard = ({ id, authorName, title, content, createdAt }: BlogCard
                         <CardTitle className="sm:text-3xl text-sm font-bold text-stone-300 break-words">
                             {title}
                         </CardTitle>
-                        <CardDescription className="text-lg text-stone-50 font-thin sm:block hidden">{content.slice(0, 100) + "..."}</CardDescription>
-                        <div className="text-sm text-white/40 mt-10 mb-7 sm:block hidden">{Math.ceil(content.length / 100)}min(s) read</div>
+                        <CardDescription className="text-lg text-stone-50 font-thin sm:block hidden">
+                            {description?.slice(0, 100) + '...'}
+                        </CardDescription>
                     </div>
                 </Card>
             </Link>
         </div>
-    )
+    );
 }

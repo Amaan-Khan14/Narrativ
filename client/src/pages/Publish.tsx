@@ -14,6 +14,7 @@ import { toast } from '@/components/ui/use-toast';
 export const Publish = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [description, setDescription] = useState("");
     const navigate = useNavigate();
     const quillRef = useRef<Quill | null>(null);
     const editorRef = useRef<HTMLDivElement>(null);
@@ -51,6 +52,7 @@ export const Publish = () => {
         try {
             const response = await axios.post(`${APP_URL}/blog`, {
                 title,
+                description,
                 content
             }, {
                 headers: {
@@ -97,6 +99,11 @@ export const Publish = () => {
                                 placeholder="Title"
                                 className="w-full h-10 px-5 py-8 placeholder:text-2xl text-xl text-stone-200 tracking-wider bg-inherit placeholder:text-stone-300"
                             />
+                            <Input
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="Description"
+                                className="w-full h-10 px-5 py-8 placeholder:text-2xl text-xl text-stone-200 tracking-wider bg-inherit placeholder:text-stone-300"
+                            />
                         </CardHeader>
                         <CardContent>
                             <div className="
@@ -107,9 +114,9 @@ export const Publish = () => {
   [&_.ql-toolbar_.ql-picker-label]:!text-zinc-700 
   [&_.ql-toolbar_.ql-picker-item]:!text-zinc-700 
   [&_.ql-toolbar_.ql-picker-options]:!bg-zinc-200 
-  [&_.ql-container]:bg-stone-200 
+  [&_.ql-container]:bg-inherit 
   [&_.ql-container]:border-zinc-300 
-  [&_.ql-editor]:text-zinc-900 
+  [&_.ql-editor]:text-stone-200
   pb-10 
 ">
                                 <div ref={editorRef} />

@@ -10,6 +10,7 @@ export interface Blog {
     author: {
         username: string;
     };
+    description?: string;
     title: string;
     content: string;
 }
@@ -44,10 +45,9 @@ export const useBlog = ({ id }: { id: number }) => {
 
 export const useBlogs = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
-    const [isLoading, setIsLoading] = useState(true);  // Start with true
-
+    const [isLoading, setIsLoading] = useState(true);  
     useEffect(() => {
-        setIsLoading(true);  // Set to true when starting the fetch
+        setIsLoading(true);  
         axios.get(`${APP_URL}/blog/all`, {
             headers: {
                 Authorization: localStorage.getItem('token')
@@ -59,12 +59,12 @@ export const useBlogs = () => {
             })
             .catch(err => {
                 console.error(err);
-                setIsLoading(false);  // Don't forget to set to false on error too
+                setIsLoading(false);  
             });
     }, []);
 
     return {
-        blogs,  // Changed from blog to blogs
+        blogs,  
         isLoading
     };
 };

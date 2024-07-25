@@ -32,6 +32,7 @@ export const Blogs = () => {
                             title={blog.title}
                             content={blog.content}
                             createdAt={blog.createdAt}
+                            description={blog.description}
                         />
                     ))}
                 </div>
